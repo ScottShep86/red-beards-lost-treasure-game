@@ -4,7 +4,7 @@ const ctx = canvas.getContext("2d");
 
 let startScreen = document.querySelector(".game-intro");
 let creditLogo = document.querySelector(".credit-logo");
-let restartBtn = document.querySelector("#restart-btn");
+//let restartBtn = document.querySelector("#restart-btn");
 
 let gameBackground = new Image();
 gameBackground.src = "images/parchmentAncient.png";
@@ -31,6 +31,11 @@ tree.src = "images/treePineTallLarge.png";
 let coin = new Image();
 coin.src = "images/coin.png";
 
+let youWonChest = new Image();
+youWonChest.src = "images/chest.png";
+let youWonChestWidth = 400;
+let youWonChestHeight = 400;
+
 let larsPirateWidth = 70;
 let larsPirateHeight = 90;
 let larsPirateX = canvas.width - larsPirateWidth - 20;
@@ -42,7 +47,6 @@ let larsPirateY = canvas.height / 2 - larsPirateHeight / 2;
 let gameOver = false;
 let animateId;
 let score = 0;
-//let wonGame = score >= 17;
 
 let skeletons = [];
 let crabs = [];
@@ -53,8 +57,8 @@ class Skeleton {
   constructor(y) {
     this.xPos = -50;
     this.yPos = y;
-    this.width = 70;
-    this.height = 90;
+    this.width = 60;
+    this.height = 80;
   }
 
   move() {
@@ -72,10 +76,10 @@ class Skeleton {
 
   checkCollision() {
     if (
-      larsPirateY < this.yPos + this.height &&
+      larsPirateY < (this.yPos + 35) + (this.height - 35) &&
       larsPirateY + larsPirateHeight > this.yPos &&
-      larsPirateX < this.xPos + this.width &&
-      larsPirateWidth - 60 + larsPirateX > this.xPos
+      larsPirateX < (this.xPos + 15) + (this.width - 15) &&
+      larsPirateWidth + larsPirateX > this.xPos
     ) {
       // Collision detected!
       // Game Over
@@ -108,10 +112,10 @@ class Crab {
 
   checkCollision() {
     if (
-      larsPirateY < this.yPos + this.height &&
-      larsPirateY + (larsPirateHeight - 60) > this.yPos &&
-      larsPirateX < this.xPos + this.width &&
-      larsPirateWidth - 60 + larsPirateX > this.xPos
+      larsPirateY < this.yPos + (this.height - 20) &&
+      larsPirateY + larsPirateHeight > this.yPos &&
+      larsPirateX < this.xPos + (this.width - 15) &&
+      larsPirateWidth + larsPirateX > this.xPos
     ) {
       // Collision detected!
       // Game Over
@@ -166,10 +170,10 @@ class Coin {
 
   checkCollision() {
     if (
-      larsPirateY < this.yPos + this.height &&
-      larsPirateY + (larsPirateHeight - 60) > this.yPos &&
-      larsPirateX < this.xPos + this.width &&
-      larsPirateWidth - 60 + larsPirateX > this.xPos
+      larsPirateY < this.yPos + (this.height - 5) &&
+      larsPirateY + larsPirateHeight > this.yPos &&
+      larsPirateX < this.xPos + (this.width - 5) &&
+      larsPirateWidth + larsPirateX > this.xPos
     ) {
       // Collision detected!
       // 1 coin in the treasure chest
@@ -301,15 +305,15 @@ const animate = () => {
   }
 
   if (isMovingUp) {
-    larsPirateY -= 2;
+    larsPirateY -= 2.5;
   } else if (isMovingDown) {
-    larsPirateY += 2;
+    larsPirateY += 2.5;
   }
 
   if (gameOver) {
     cancelAnimationFrame(animateId);
-    ctx.font = "30pt TreasureMapDeadhand-yLA3";
-    ctx.fillText("GAME OVER", canvas.width / 2 - 125, canvas.height / 2 - 140);
+    //ctx.font = "30pt TreasureMapDeadhand-yLA3";
+    //ctx.fillText("GAME OVER", canvas.width / 2 - 125, canvas.height / 2 - 140);
     ctx.drawImage(
       gameOverSkull,
       280,
@@ -321,26 +325,23 @@ const animate = () => {
     animateId = requestAnimationFrame(animate);
   }
 
-  /*if (wonGame) {
+  if (score >= 200) {
     cancelAnimationFrame(animateId);
     ctx.font = "30pt TreasureMapDeadhand-yLA3";
-    ctx.fillText("YOU WON!", canvas.width / 2 - 125, canvas.height / 2 - 140);
+    ctx.fillText("YOU WON!", canvas.width / 2 - 80, canvas.height / 2 - 100);
     ctx.drawImage(
-      gameOverSkull,
-      280,
+      youWonChest,
+      320,
       100,
       gameOverSkullWidth,
       gameOverSkullHeight
     );
-  } else {
-    animateId = requestAnimationFrame(animate);
-  }*/
-
+  }
 };
 
 window.onload = () => {
   canvas.style.display = "none";
-  restartBtn.style.display = "none";
+  //restartBtn.style.visibility = "hidden";
   document.getElementById("start-btn").onclick = () => {
     startGame();
   };
