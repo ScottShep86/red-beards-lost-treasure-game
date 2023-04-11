@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Red Beards' Lost Treasure!</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="game-intro">
+      <img
+        class="skull-logo"
+        src="./images/logo_skull.jpg"
+        alt="Black Beards skull"
+      />
+      <br />
+      <img class="logo" src="./images/logo.png" alt="Black Beards Logo" />
+      <br />
+      <div class="select">
+      <p>Press 'L' for Pirate Lars -></p>
+      <img class= "pirate" src="images/lars.png" alt="Pirate Lars">
+      <img class= "pirate" src="images/ruby.png" alt="Pirate Ruby">
+      <p><- or press 'R' for Pirate Ruby.</p>
+      </div>
+      <button id="start-btn">Start Game</button>
+      <button id="restart-btn">Restart Game</button>
+      <p>Use the UP and DOWN arrows to control your Privateer!</p>
+    </div>
+
+    <div id="game-board">
+      <canvas id="canvas" width="1000" height="500"></canvas>
+    </div>
+
+    <div class="credit-logo">
+    <a
+      href="https://www.freepik.com/free-vector/vintage-trendy-bald-hipster-skull-template_8084274.htm#query=skull%20beard&position=0&from_view=keyword&track=ais"
+      >Image by dgim-studio</a>
+    on Freepik
+    </div>
+    <script type="text/javascript" src="index.js"></script>
+  </body>
+</html>

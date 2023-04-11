@@ -1,0 +1,63 @@
+@font-face {
+    font-family: TreasureMapDeadhand-yLA3;
+    src: url(fonts/TreasureMapDeadhand-yLA3.ttf);
+  }
+
+body {
+    font-family: TreasureMapDeadhand-yLA3;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.skull-logo {
+    height: 220px;
+}
+
+.logo {
+    width: 400px
+}
+
+.select {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.select-btn {
+    background-color: white;
+    margin: 20px;
+}
+
+.pirate {
+    height: 85px;
+
+}
+
+#start-btn {
+    font-family: TreasureMapDeadhand-yLA3;
+    font-size: 1.8rem;
+    color: white;
+    height: 50px;
+    width: 200px;
+    background-color: black;
+    border: none
+}
+
+#restart-btn {
+    font-family: TreasureMapDeadhand-yLA3;
+    font-size: 1.8rem;
+    color: white;
+    height: 60px;
+    width: 200px;
+    background-color: black;
+    border: none
+}
+
+#game-board {
+    display: flex;
+    justify-content: center;
+}
+
+.credit-logo {
+    font-size: 0.9rem;
+}
