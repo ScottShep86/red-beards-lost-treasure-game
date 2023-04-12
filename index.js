@@ -53,22 +53,22 @@ let crabs = [];
 let trees = [];
 let coins = [];
 
-const loadingPageAudio = new Audio();
+let loadingPageAudio = new Audio();
 loadingPageAudio.src = "sounds/redbeardslosttreasurepart1.mp3";
 
-const gameAudio = new Audio();
+let gameAudio = new Audio();
 gameAudio.src = "sounds/redbeardslosttreasurepart2.mp3"
 
-const gameOverAudio = new Audio("gameover.wav");
+let gameOverAudio = new Audio("gameover.wav");
 gameOverAudio.src = "sounds/gameover.wav";
 
-const youWonAudio = new Audio();
+let youWonAudio = new Audio();
 youWonAudio.src = "sounds/youwon.wav";
 
-const youWonCheersAudio = new Audio();
+let youWonCheersAudio = new Audio();
 youWonCheersAudio.src = "sounds/cheers.wav";
 
-const coinsAudio = new Audio();
+let coinsAudio = new Audio();
 coinsAudio.src = "sounds/coins.wav";
 
 /* const audios = document.querySelectorAll('.audio');
