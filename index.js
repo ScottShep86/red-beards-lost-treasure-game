@@ -53,9 +53,7 @@ let crabs = [];
 let trees = [];
 let coins = [];
 
-const loadingPageAudio = new Audio(
-  "sounds/RED BEARDS LOST TREASURE part 1.mp3"
-);
+const loadingPageAudio = new Audio("RED BEARDS LOST TREASURE part 1.mp3");
 
 const gameAudio = new Audio("RED BEARDS LOST TREASURE part 2.mp3");
 
