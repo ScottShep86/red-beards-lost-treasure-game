@@ -4,7 +4,7 @@ const ctx = canvas.getContext("2d");
 
 let startScreen = document.querySelector(".game-intro");
 let creditLogo = document.querySelector(".credit-logo");
-//let restartBtn = document.querySelector("#restart-btn");
+let restartBtn = document.querySelector("#restart-btn");
 
 let gameBackground = new Image();
 gameBackground.src = "images/parchmentAncient.png";
@@ -26,7 +26,7 @@ let gameOverSkullWidth = 400;
 let gameOverSkullHeight = 400;
 
 let tree = new Image();
-tree.src = "images/treePineTallLarge.png";
+tree.src = "images/rocks.png";
 
 let coin = new Image();
 coin.src = "images/coin.png";
@@ -53,6 +53,45 @@ let crabs = [];
 let trees = [];
 let coins = [];
 
+/* const loadingPageAudio = new Audio(
+  "sounds/RED BEARDS LOST TREASURE part 1.mp3"
+).loop() = true; */
+
+/* const gameAudio = new Audio(
+  "sounds/RED BEARDS LOST TREASURE part 2.mp3"
+).loop(true); */
+
+const audios = document.querySelectorAll('.audio');
+	
+	if (audios.length != 0){
+		for (var i=0; i < audios.length; i++){
+			(audios[i].paused) ? audios[i].play() : audios[i].pause();
+		}
+	}
+
+class Tree {
+  constructor(y) {
+    this.xPos = -50;
+    this.yPos = y;
+    this.width = 64;
+    //this.height = 128;
+    this.height = 64;
+  }
+
+  move() {
+    this.xPos += 3;
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.fillStyle = "black";
+    // xPos, yPos, width, height
+    ctx.drawImage(tree, this.xPos, this.yPos, this.width, this.height);
+    ctx.fill();
+    ctx.closePath();
+  }
+}
+
 class Skeleton {
   constructor(y) {
     this.xPos = -50;
@@ -76,10 +115,10 @@ class Skeleton {
 
   checkCollision() {
     if (
-      larsPirateY < (this.yPos + 35) + (this.height - 35) &&
-      larsPirateY + larsPirateHeight > this.yPos &&
-      larsPirateX < (this.xPos + 15) + (this.width - 15) &&
-      larsPirateWidth + larsPirateX > this.xPos
+      larsPirateY < this.yPos + (this.height - 15) &&
+      larsPirateY + larsPirateHeight > (this.yPos + 10) &&
+      larsPirateX < this.xPos + (this.width - 18) &&
+      larsPirateWidth + larsPirateX > (this.xPos + 10)
     ) {
       // Collision detected!
       // Game Over
@@ -91,14 +130,14 @@ class Skeleton {
 
 class Crab {
   constructor(y) {
-    this.xPos = -50;
+    this.xPos = -150;
     this.yPos = y;
     this.width = 150;
     this.height = 99;
   }
 
   move() {
-    this.xPos += 1;
+    this.xPos += 1.5;
   }
 
   draw() {
@@ -113,37 +152,15 @@ class Crab {
   checkCollision() {
     if (
       larsPirateY < this.yPos + (this.height - 20) &&
-      larsPirateY + larsPirateHeight > this.yPos &&
-      larsPirateX < this.xPos + (this.width - 15) &&
-      larsPirateWidth + larsPirateX > this.xPos
+      larsPirateY + larsPirateHeight > (this.yPos + 10) &&
+      larsPirateX < this.xPos + (this.width - 20) &&
+      larsPirateWidth + larsPirateX > (this.xPos + 10)
     ) {
       // Collision detected!
       // Game Over
       gameOver = true;
       console.log("Collision");
     }
-  }
-}
-
-class Tree {
-  constructor(y) {
-    this.xPos = -50;
-    this.yPos = y;
-    this.width = 64;
-    this.height = 128;
-  }
-
-  move() {
-    this.xPos += 3;
-  }
-
-  draw() {
-    ctx.beginPath();
-    ctx.fillStyle = "black";
-    // xPos, yPos, width, height
-    ctx.drawImage(tree, this.xPos, this.yPos, this.width, this.height);
-    ctx.fill();
-    ctx.closePath();
   }
 }
 
@@ -198,8 +215,8 @@ const drawBackground = () => {
     canvas.width,
     canvas.height
   );
-  gameBackground1X += 4;
-  gameBackground2X += 4;
+  gameBackground1X += 3;
+  gameBackground2X += 3;
   if (gameBackground1X > canvas.width) {
     gameBackground1X = -canvas.width;
   }
@@ -222,16 +239,16 @@ const drawLarsPirate = () => {
 };
 
 const drawScore = () => {
-    ctx.beginPath();
-    ctx.font = "20pt TreasureMapDeadhand-yLA3";
-    ctx.fillText(`Chest : ${score}`, 10, 30);
-    ctx.closePath();
-}
+  ctx.beginPath();
+  ctx.font = "20pt TreasureMapDeadhand-yLA3";
+  ctx.fillText(`Chest : ${score}`, 10, 30);
+  ctx.closePath();
+};
 
 const animate = () => {
   drawBackground();
   drawLarsPirate();
-  drawScore()
+  drawScore();
 
   const skeletonsStillInScreen = [];
 
@@ -282,7 +299,7 @@ const animate = () => {
   });
   trees = treesStillInScreen;
 
-  if (animateId % 400 === 0) {
+  if (animateId % 20 === 0) {
     trees.push(new Tree(Math.random() * (canvas.height - 200)));
   }
 
@@ -312,6 +329,7 @@ const animate = () => {
 
   if (gameOver) {
     cancelAnimationFrame(animateId);
+    restartBtn.style.display = "block";
     //ctx.font = "30pt TreasureMapDeadhand-yLA3";
     //ctx.fillText("GAME OVER", canvas.width / 2 - 125, canvas.height / 2 - 140);
     ctx.drawImage(
@@ -325,9 +343,11 @@ const animate = () => {
     animateId = requestAnimationFrame(animate);
   }
 
-  if (score >= 200) {
+  if (score >= 51) {
     cancelAnimationFrame(animateId);
+    restartBtn.style.display = "block";
     ctx.font = "30pt TreasureMapDeadhand-yLA3";
+    ctx.fillStyle = "#28282B";
     ctx.fillText("YOU WON!", canvas.width / 2 - 80, canvas.height / 2 - 100);
     ctx.drawImage(
       youWonChest,
@@ -341,7 +361,8 @@ const animate = () => {
 
 window.onload = () => {
   canvas.style.display = "none";
-  //restartBtn.style.visibility = "hidden";
+  restartBtn.style.display = "none";
+  /* loadingPageAudio.play(); */
   document.getElementById("start-btn").onclick = () => {
     startGame();
   };
@@ -349,10 +370,29 @@ window.onload = () => {
   function startGame() {
     //console.log("Let's GO!");
     canvas.style.display = "block";
+    restartBtn.style.display = "none";
     startScreen.style.display = "none";
     creditLogo.style.display = "none";
+    /* loadingPageAudio.pause();
+    loadingPageAudio.currentTime = 0;
+    gameAudio.play(); */
 
     animate();
+  }
+
+  function restartGame() {
+    larsPirateX = canvas.width - larsPirateWidth - 20;
+    isMovingUp = false;
+    isMovingDown = false;
+    larsPirateY = canvas.height / 2 - larsPirateHeight / 2;
+    gameOver = false;
+    animateId;
+    score = 0;
+    skeletons = [];
+    crabs = [];
+    trees = [];
+    coins = [];
+    startGame();
   }
 
   document.addEventListener("keydown", (event) => {
@@ -397,5 +437,9 @@ window.onload = () => {
     if (event.key === "b" || event.key === "B") {
       skeleton.src = "images/skeleton.png";
     }
+  });
+
+  restartBtn.addEventListener("click", () => {
+    restartGame();
   });
 };
