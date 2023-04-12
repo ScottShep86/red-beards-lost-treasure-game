@@ -376,8 +376,8 @@ window.onload = () => {
   canvas.style.display = "none";
   restartBtn.style.display = "none";
   loadingPageAudio.loop = true;
-  loadingPageAudio.volume = 0.15;
   loadingPageAudio.play();
+  loadingPageAudio.volume = 0.15;
   document.getElementById("start-btn").onclick = () => {
     startGame();
   };
