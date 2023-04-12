@@ -54,12 +54,12 @@ let trees = [];
 let coins = [];
 
 let loadingPageAudio = new Audio();
-loadingPageAudio.src = "./sounds/redbeardslosttreasurepart1.mp3";
+loadingPageAudio.src = "sounds/redbeardslosttreasurepart1.mp3";
 
 let gameAudio = new Audio();
-gameAudio.src = "./sounds/redbeardslosttreasurepart2.mp3"
+gameAudio.src = "sounds/redbeardslosttreasurepart2.mp3";
 
-let gameOverAudio = new Audio("gameover.wav");
+let gameOverAudio = new Audio();
 gameOverAudio.src = "./sounds/gameover.wav";
 
 let youWonAudio = new Audio();
