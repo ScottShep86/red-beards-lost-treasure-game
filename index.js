@@ -53,21 +53,25 @@ let crabs = [];
 let trees = [];
 let coins = [];
 
-/* const loadingPageAudio = new Audio(
-  "sounds/RED BEARDS LOST TREASURE part 1.mp3"
-).loop() = true; */
+const loadingPageAudio = new Audio("sounds/RED BEARDS LOST TREASURE part 1.mp3");
 
-/* const gameAudio = new Audio(
-  "sounds/RED BEARDS LOST TREASURE part 2.mp3"
-).loop(true); */
+const gameAudio = new Audio("sounds/RED BEARDS LOST TREASURE part 2.mp3");
 
-const audios = document.querySelectorAll('.audio');
+const gameOverAudio = new Audio("sounds/gameover.wav");
+
+const youWonAudio = new Audio("sounds/youwon.wav");
+
+const youWonCheersAudio = new Audio("sounds/cheers.wav");
+
+const coinsAudio = new Audio("sounds/coins.wav");
+
+/* const audios = document.querySelectorAll('.audio');
 	
 	if (audios.length != 0){
 		for (var i=0; i < audios.length; i++){
 			(audios[i].paused) ? audios[i].play() : audios[i].pause();
 		}
-	}
+	} */
 
 class Tree {
   constructor(y) {
@@ -195,6 +199,7 @@ class Coin {
       // Collision detected!
       // 1 coin in the treasure chest
       score += 1;
+      coinsAudio.play();
     }
   }
 }
@@ -330,6 +335,9 @@ const animate = () => {
   if (gameOver) {
     cancelAnimationFrame(animateId);
     restartBtn.style.display = "block";
+    gameAudio.pause();
+    gameOverAudio.volume = 0.3;
+    gameOverAudio.play()
     //ctx.font = "30pt TreasureMapDeadhand-yLA3";
     //ctx.fillText("GAME OVER", canvas.width / 2 - 125, canvas.height / 2 - 140);
     ctx.drawImage(
@@ -346,6 +354,10 @@ const animate = () => {
   if (score >= 51) {
     cancelAnimationFrame(animateId);
     restartBtn.style.display = "block";
+    gameAudio.pause();
+    youWonAudio.volume = 0.3;
+    youWonAudio.play();
+    youWonCheersAudio.play(); 
     ctx.font = "30pt TreasureMapDeadhand-yLA3";
     ctx.fillStyle = "#28282B";
     ctx.fillText("YOU WON!", canvas.width / 2 - 80, canvas.height / 2 - 100);
@@ -362,7 +374,9 @@ const animate = () => {
 window.onload = () => {
   canvas.style.display = "none";
   restartBtn.style.display = "none";
-  /* loadingPageAudio.play(); */
+  loadingPageAudio.loop = true;
+  loadingPageAudio.volume = 0.2;
+  loadingPageAudio.play();
   document.getElementById("start-btn").onclick = () => {
     startGame();
   };
@@ -373,9 +387,10 @@ window.onload = () => {
     restartBtn.style.display = "none";
     startScreen.style.display = "none";
     creditLogo.style.display = "none";
-    /* loadingPageAudio.pause();
-    loadingPageAudio.currentTime = 0;
-    gameAudio.play(); */
+    loadingPageAudio.pause();
+    gameAudio.loop = true;
+    gameAudio.volume = 0.15;
+    gameAudio.play();
 
     animate();
   }
@@ -392,6 +407,7 @@ window.onload = () => {
     crabs = [];
     trees = [];
     coins = [];
+    gameAudio.currentTime = 0;
     startGame();
   }
 
