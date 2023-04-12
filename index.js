@@ -53,8 +53,10 @@ let crabs = [];
 let trees = [];
 let coins = [];
 
-let loadingPageAudio = new Audio();
-loadingPageAudio.src = "./sounds/redbeardslosttreasurepart1.mp3";
+/* let loadingPageAudio = new Audio();
+loadingPageAudio.src = "./sounds/redbeardslosttreasurepart1.mp3"; */
+
+let loadingPageAudio = document.querySelector(".audio")
 
 let gameAudio = new Audio();
 gameAudio.src = "./sounds/redbeardslosttreasurepart2.mp3";
@@ -466,4 +468,5 @@ window.onload = () => {
   restartBtn.addEventListener("click", () => {
     restartGame();
   });
-};
+  };
+
