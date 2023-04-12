@@ -5,6 +5,7 @@ const ctx = canvas.getContext("2d");
 let startScreen = document.querySelector(".game-intro");
 let creditLogo = document.querySelector(".credit-logo");
 let restartBtn = document.querySelector("#restart-btn");
+let musicBtn = document.querySelector("#music-btn")
 
 let gameBackground = new Image();
 gameBackground.src = "images/parchmentAncient.png";
@@ -53,10 +54,10 @@ let crabs = [];
 let trees = [];
 let coins = [];
 
-/* let loadingPageAudio = new Audio();
-loadingPageAudio.src = "./sounds/redbeardslosttreasurepart1.mp3"; */
+let loadingPageAudio = new Audio();
+loadingPageAudio.src = "./sounds/redbeardslosttreasurepart1.mp3";
 
-let loadingPageAudio = document.querySelector(".audio")
+/* let loadingPageAudio = document.querySelector(".audio") */
 
 let gameAudio = new Audio();
 gameAudio.src = "./sounds/redbeardslosttreasurepart2.mp3";
@@ -127,7 +128,7 @@ class Skeleton {
 
   checkCollision() {
     if (
-      larsPirateY < this.yPos + (this.height - 15) &&
+      larsPirateY < this.yPos + (this.height - 13) &&
       larsPirateY + larsPirateHeight > this.yPos + 10 &&
       larsPirateX < this.xPos + (this.width - 18) &&
       larsPirateWidth + larsPirateX > this.xPos + 10
@@ -360,12 +361,13 @@ const animate = () => {
     animateId = requestAnimationFrame(animate);
   }
 
-  if (score >= 51) {
+  if (score >= 76) {
     cancelAnimationFrame(animateId);
     restartBtn.style.display = "block";
     gameAudio.pause();
     youWonAudio.volume = 0.3;
     youWonAudio.play();
+    youWonCheersAudio.volume = 0.1;
     youWonCheersAudio.play();
     ctx.font = "30pt TreasureMapDeadhand-yLA3";
     ctx.fillStyle = "#28282B";
@@ -383,9 +385,6 @@ const animate = () => {
 window.onload = () => {
   canvas.style.display = "none";
   restartBtn.style.display = "none";
-  loadingPageAudio.loop = true;
-  loadingPageAudio.volume = 0.15;
-  loadingPageAudio.play();
   document.getElementById("start-btn").onclick = () => {
     startGame();
   };
@@ -419,6 +418,12 @@ window.onload = () => {
     gameAudio.currentTime = 0;
     gameAudio.volume = 0.15;
     startGame();
+  }
+
+  function musicStart() {
+    loadingPageAudio.loop = true;
+    loadingPageAudio.volume = 0.15;
+    loadingPageAudio.play();
   }
 
   document.addEventListener("keydown", (event) => {
@@ -467,6 +472,10 @@ window.onload = () => {
 
   restartBtn.addEventListener("click", () => {
     restartGame();
+  });
+  
+  musicBtn.addEventListener("click", () => {
+    musicStart()
   });
   };
 

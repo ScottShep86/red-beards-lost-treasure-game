@@ -54,6 +54,14 @@ body {
     margin: auto;
 }
 
+#music-btn {
+    font-family: TreasureMapDeadhand-yLA3;
+    font-size: 1rem;
+    color: white;
+    background-color: black;
+    border: none;
+}
+
 #game-board {
     display: flex;
     justify-content: center;
