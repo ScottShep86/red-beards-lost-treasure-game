@@ -53,17 +53,19 @@ let crabs = [];
 let trees = [];
 let coins = [];
 
-const loadingPageAudio = new Audio("./sounds/RED BEARDS LOST TREASURE part 1.mp3");
+const loadingPageAudio = new Audio(
+  "sounds/RED BEARDS LOST TREASURE part 1.mp3"
+);
 
-const gameAudio = new Audio("./sounds/RED BEARDS LOST TREASURE part 2.mp3");
+const gameAudio = new Audio("RED BEARDS LOST TREASURE part 2.mp3");
 
-const gameOverAudio = new Audio("./sounds/gameover.wav");
+const gameOverAudio = new Audio("gameover.wav");
 
-const youWonAudio = new Audio("./sounds/youwon.wav");
+const youWonAudio = new Audio("youwon.wav");
 
-const youWonCheersAudio = new Audio("./sounds/cheers.wav");
+const youWonCheersAudio = new Audio("cheers.wav");
 
-const coinsAudio = new Audio("./sounds/coins.wav");
+const coinsAudio = new Audio("coins.wav");
 
 /* const audios = document.querySelectorAll('.audio');
 	
@@ -120,9 +122,9 @@ class Skeleton {
   checkCollision() {
     if (
       larsPirateY < this.yPos + (this.height - 15) &&
-      larsPirateY + larsPirateHeight > (this.yPos + 10) &&
+      larsPirateY + larsPirateHeight > this.yPos + 10 &&
       larsPirateX < this.xPos + (this.width - 18) &&
-      larsPirateWidth + larsPirateX > (this.xPos + 10)
+      larsPirateWidth + larsPirateX > this.xPos + 10
     ) {
       // Collision detected!
       // Game Over
@@ -156,9 +158,9 @@ class Crab {
   checkCollision() {
     if (
       larsPirateY < this.yPos + (this.height - 20) &&
-      larsPirateY + larsPirateHeight > (this.yPos + 10) &&
+      larsPirateY + larsPirateHeight > this.yPos + 10 &&
       larsPirateX < this.xPos + (this.width - 20) &&
-      larsPirateWidth + larsPirateX > (this.xPos + 10)
+      larsPirateWidth + larsPirateX > this.xPos + 10
     ) {
       // Collision detected!
       // Game Over
@@ -199,6 +201,7 @@ class Coin {
       // Collision detected!
       // 1 coin in the treasure chest
       score += 1;
+      coinsAudio.volume = 0.3;
       coinsAudio.play();
     }
   }
@@ -337,7 +340,7 @@ const animate = () => {
     restartBtn.style.display = "block";
     gameAudio.pause();
     gameOverAudio.volume = 0.3;
-    gameOverAudio.play()
+    gameOverAudio.play();
     //ctx.font = "30pt TreasureMapDeadhand-yLA3";
     //ctx.fillText("GAME OVER", canvas.width / 2 - 125, canvas.height / 2 - 140);
     ctx.drawImage(
@@ -357,7 +360,7 @@ const animate = () => {
     gameAudio.pause();
     youWonAudio.volume = 0.3;
     youWonAudio.play();
-    youWonCheersAudio.play(); 
+    youWonCheersAudio.play();
     ctx.font = "30pt TreasureMapDeadhand-yLA3";
     ctx.fillStyle = "#28282B";
     ctx.fillText("YOU WON!", canvas.width / 2 - 80, canvas.height / 2 - 100);
@@ -375,7 +378,7 @@ window.onload = () => {
   canvas.style.display = "none";
   restartBtn.style.display = "none";
   loadingPageAudio.loop = true;
-  loadingPageAudio.volume = 0.2;
+  loadingPageAudio.volume = 0.15;
   loadingPageAudio.play();
   document.getElementById("start-btn").onclick = () => {
     startGame();
@@ -408,6 +411,7 @@ window.onload = () => {
     trees = [];
     coins = [];
     gameAudio.currentTime = 0;
+    gameAudio.volume = 0.15;
     startGame();
   }
 
