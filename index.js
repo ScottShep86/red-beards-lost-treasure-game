@@ -53,17 +53,23 @@ let crabs = [];
 let trees = [];
 let coins = [];
 
-const loadingPageAudio = new Audio("RED BEARDS LOST TREASURE part 1.mp3");
+const loadingPageAudio = new Audio();
+loadingPageAudio.src = "sounds/redbeardslosttreasurepart1.mp3";
 
-const gameAudio = new Audio("RED BEARDS LOST TREASURE part 2.mp3");
+const gameAudio = new Audio();
+gameAudio.src = "sounds/redbeardslosttreasurepart2.mp3"
 
 const gameOverAudio = new Audio("gameover.wav");
+gameOverAudio.src = "sounds/gameover.wav";
 
-const youWonAudio = new Audio("youwon.wav");
+const youWonAudio = new Audio();
+youWonAudio.src = "sounds/youwon.wav";
 
-const youWonCheersAudio = new Audio("cheers.wav");
+const youWonCheersAudio = new Audio();
+youWonCheersAudio.src = "sounds/cheers.wav";
 
-const coinsAudio = new Audio("coins.wav");
+const coinsAudio = new Audio();
+coinsAudio.src = "sounds/coins.wav";
 
 /* const audios = document.querySelectorAll('.audio');
 	
@@ -376,8 +382,8 @@ window.onload = () => {
   canvas.style.display = "none";
   restartBtn.style.display = "none";
   loadingPageAudio.loop = true;
-  loadingPageAudio.play();
   loadingPageAudio.volume = 0.15;
+  loadingPageAudio.play();
   document.getElementById("start-btn").onclick = () => {
     startGame();
   };
