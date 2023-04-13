@@ -33,8 +33,8 @@
 
 <h2>Links</h2>
 <ul>
-<li><a href="https://trello.com/b/cDM8GUmZ/red-beards-lost-treasure">Trello Link</a></li>
-<li><a href="">Slides Link</a></li>
+<li><a href="https://trello.com/b/cDM8GUmZ/red-beards-lost-treasure">Trello</a></li>
+<li><a href="https://docs.google.com/presentation/d/1SD_IBXZHC17O8OY-yZWWG2E--oaukD3O1ldDMSs1RSQ/edit#slide=id.g22d3e184c02_0_98">Presentation slides</a></li>
 <li><a href="https://github.com/ScottShep86/red-beards-lost-treasure-game">Github repository Link</a></li>
-<li><a href="">Deployment Link</a></li>
+<li><a href="https://scottshep86.github.io/red-beards-lost-treasure-game/">Link to Red Beards Lost Treasure</a></li>
 </ul>

@@ -5,7 +5,7 @@ const ctx = canvas.getContext("2d");
 let startScreen = document.querySelector(".game-intro");
 let creditLogo = document.querySelector(".credit-logo");
 let restartBtn = document.querySelector("#restart-btn");
-let musicBtn = document.querySelector("#music-btn")
+let musicBtn = document.querySelector("#music-btn");
 
 let gameBackground = new Image();
 gameBackground.src = "images/parchmentAncient.png";
@@ -39,6 +39,7 @@ let youWonChestHeight = 400;
 
 let larsPirateWidth = 70;
 let larsPirateHeight = 90;
+const larsPirateSpeed = 2.5;
 let larsPirateX = canvas.width - larsPirateWidth - 20;
 
 let isMovingUp = false;
@@ -51,13 +52,11 @@ let score = 0;
 
 let skeletons = [];
 let crabs = [];
-let trees = [];
+let stones = [];
 let coins = [];
 
 let loadingPageAudio = new Audio();
 loadingPageAudio.src = "./sounds/redbeardslosttreasurepart1.mp3";
-
-/* let loadingPageAudio = document.querySelector(".audio") */
 
 let gameAudio = new Audio();
 gameAudio.src = "./sounds/redbeardslosttreasurepart2.mp3";
@@ -74,15 +73,9 @@ youWonCheersAudio.src = "./sounds/cheers.wav";
 let coinsAudio = new Audio();
 coinsAudio.src = "./sounds/coins.wav";
 
-/* const audios = document.querySelectorAll('.audio');
-	
-	if (audios.length != 0){
-		for (var i=0; i < audios.length; i++){
-			(audios[i].paused) ? audios[i].play() : audios[i].pause();
-		}
-	} */
 
-class Tree {
+
+class Stone {
   constructor(y) {
     this.xPos = -50;
     this.yPos = y;
@@ -133,8 +126,6 @@ class Skeleton {
       larsPirateX < this.xPos + (this.width - 18) &&
       larsPirateWidth + larsPirateX > this.xPos + 10
     ) {
-      // Collision detected!
-      // Game Over
       gameOver = true;
       console.log("Collision");
     }
@@ -205,8 +196,6 @@ class Coin {
       larsPirateX < this.xPos + (this.width - 5) &&
       larsPirateWidth + larsPirateX > this.xPos
     ) {
-      // Collision detected!
-      // 1 coin in the treasure chest
       score += 1;
       coinsAudio.volume = 0.3;
       coinsAudio.play();
@@ -251,6 +240,15 @@ const drawLarsPirate = () => {
     larsPirateHeight
   );
   ctx.closePath();
+  if (isMovingUp) {
+    if (larsPirateY > 0) {
+      larsPirateY -= larsPirateSpeed;
+    }
+  } else if (isMovingDown) {
+    if (larsPirateY < canvas.height - larsPirateHeight) {
+      larsPirateY += larsPirateSpeed;
+    }
+  }
 };
 
 const drawScore = () => {
@@ -272,7 +270,6 @@ const animate = () => {
     skeleton.draw();
     skeleton.checkCollision();
     skeleton.move();
-    // Is my obstacle still in the screen
     if (skeleton.xPos < canvas.width) {
       skeletonsStillInScreen.push(skeleton);
     }
@@ -290,7 +287,6 @@ const animate = () => {
     crab.draw();
     crab.checkCollision();
     crab.move();
-    // Is my obstacle still in the screen
     if (crab.xPos < canvas.width) {
       crabsStillInScreen.push(crab);
     }
@@ -301,21 +297,20 @@ const animate = () => {
     crabs.push(new Crab(Math.random() * (canvas.height - 99)));
   }
 
-  const treesStillInScreen = [];
+  const stonesStillInScreen = [];
 
-  console.log(trees);
-  trees.forEach((tree) => {
-    tree.draw();
-    tree.move();
-    // Is my obstacle still in the screen
-    if (tree.xPos < canvas.width) {
-      treesStillInScreen.push(tree);
+  console.log(stones);
+  stones.forEach((stone) => {
+    stone.draw();
+    stone.move();
+    if (stone.xPos < canvas.width) {
+      stonesStillInScreen.push(stone);
     }
   });
-  trees = treesStillInScreen;
+  stones = stonesStillInScreen;
 
   if (animateId % 20 === 0) {
-    trees.push(new Tree(Math.random() * (canvas.height - 200)));
+    stones.push(new Stone(Math.random() * (canvas.height - 200)));
   }
 
   const coinsStillInScreen = [];
@@ -325,7 +320,6 @@ const animate = () => {
     coin.draw();
     coin.checkCollision();
     coin.move();
-    // Is my obstacle still in the screen
     if (coin.xPos < canvas.width) {
       coinsStillInScreen.push(coin);
     }
@@ -336,20 +330,12 @@ const animate = () => {
     coins.push(new Coin(Math.random() * (canvas.height - 99)));
   }
 
-  if (isMovingUp) {
-    larsPirateY -= 2.5;
-  } else if (isMovingDown) {
-    larsPirateY += 2.5;
-  }
-
   if (gameOver) {
     cancelAnimationFrame(animateId);
     restartBtn.style.display = "block";
     gameAudio.pause();
-    gameOverAudio.volume = 0.3;
+    gameOverAudio.volume = 0.2;
     gameOverAudio.play();
-    //ctx.font = "30pt TreasureMapDeadhand-yLA3";
-    //ctx.fillText("GAME OVER", canvas.width / 2 - 125, canvas.height / 2 - 140);
     ctx.drawImage(
       gameOverSkull,
       280,
@@ -397,7 +383,7 @@ window.onload = () => {
     creditLogo.style.display = "none";
     loadingPageAudio.pause();
     gameAudio.loop = true;
-    gameAudio.volume = 0.15;
+    gameAudio.volume = 0.1;
     gameAudio.play();
 
     animate();
@@ -416,14 +402,19 @@ window.onload = () => {
     trees = [];
     coins = [];
     gameAudio.currentTime = 0;
-    gameAudio.volume = 0.15;
+    gameAudio.volume = 0.1;
     startGame();
   }
 
   function musicStart() {
     loadingPageAudio.loop = true;
-    loadingPageAudio.volume = 0.15;
+    loadingPageAudio.volume = 0.1;
     loadingPageAudio.play();
+  }
+
+  function musicStop() {
+    loadingPageAudio.pause();
+    loadingPageAudio.currentTime = 0;
   }
 
   document.addEventListener("keydown", (event) => {
@@ -462,7 +453,11 @@ window.onload = () => {
     if (event.key === "b" || event.key === "B") {
       skeleton.src = "images/bane.png";
     }
+    if (event.key === "s" || event.key === "S") {
+      musicStop();
+    }
   });
+
   document.addEventListener("keyup", (event) => {
     console.log(event);
     if (event.key === "b" || event.key === "B") {
@@ -473,9 +468,8 @@ window.onload = () => {
   restartBtn.addEventListener("click", () => {
     restartGame();
   });
-  
-  musicBtn.addEventListener("click", () => {
-    musicStart()
-  });
-  };
 
+  musicBtn.addEventListener("click", () => {
+    musicStart();
+  });
+};
