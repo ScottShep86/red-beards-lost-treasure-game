@@ -1,5 +1,11 @@
 <h1>Red Beards Lost Treasure</h1>
 
+ <img
+        class="skull-logo"
+        src="./images/logo_skull.jpg"
+        alt="Black Beards skull"
+        />
+<br>
 <a href="https://scottshep86.github.io/red-beards-lost-treasure-game/">Red Beards Lost Treasure</a>
 <h2>Description</h2>
 
