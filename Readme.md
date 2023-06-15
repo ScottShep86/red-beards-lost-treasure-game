@@ -2,7 +2,7 @@
 
  <img
         class="skull-logo"
-        src="./images/logo_skull.jpg"
+        src="./images/logo_skull.png"
         alt="Black Beards skull"
         />
 <br>
