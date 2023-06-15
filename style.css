@@ -7,14 +7,24 @@ body {
     font-family: TreasureMapDeadhand-yLA3;
     font-size: 1.5rem;
     text-align: center;
+    background-image: url("./images/jakob-braun-RHltK9oYD7w-unsplash.jpg");
+    background-size: cover;
 }
 
 .skull-logo {
     height: 220px;
 }
 
-.logo {
+/* .logo {
     width: 400px
+} */
+
+.game-intro {
+    color: white;
+}
+
+h1 {
+    font-weight: 100;
 }
 
 .select {
@@ -78,4 +88,5 @@ p {
     flex-direction: row;
     justify-content: center;
     align-items: baseline;
+    color: white;
 }

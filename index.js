@@ -39,11 +39,13 @@ let youWonChestHeight = 400;
 
 let larsPirateWidth = 70;
 let larsPirateHeight = 90;
-const larsPirateSpeed = 2.5;
+const larsPirateSpeed = 3;
 let larsPirateX = canvas.width - larsPirateWidth - 20;
 
 let isMovingUp = false;
 let isMovingDown = false;
+let isMovingLeft = false;
+let isMovingRight = false;
 let larsPirateY = canvas.height / 2 - larsPirateHeight / 2;
 
 let gameOver = false;
@@ -199,6 +201,7 @@ class Coin {
       score += 1;
       coinsAudio.volume = 0.3;
       coinsAudio.play();
+      this.xPos = -2000;
     }
   }
 }
@@ -248,6 +251,14 @@ const drawLarsPirate = () => {
     if (larsPirateY < canvas.height - larsPirateHeight) {
       larsPirateY += larsPirateSpeed;
     }
+  } else if (isMovingLeft) {
+    if (larsPirateX > 0) {
+      larsPirateX -= larsPirateSpeed;
+    }
+  } else if (isMovingRight) {
+    if (larsPirateX < canvas.width - larsPirateWidth) {
+      larsPirateX += larsPirateSpeed
+    }
   }
 };
 
@@ -260,6 +271,40 @@ const drawScore = () => {
 
 const animate = () => {
   drawBackground();
+  
+  const stonesStillInScreen = [];
+
+  console.log(stones);
+  stones.forEach((stone) => {
+    stone.draw();
+    stone.move();
+    if (stone.xPos < canvas.width) {
+      stonesStillInScreen.push(stone);
+    }
+  });
+  stones = stonesStillInScreen;
+
+  if (animateId % 20 === 0) {
+    stones.push(new Stone(Math.random() * (canvas.height - 200)));
+  }
+
+  const coinsStillInScreen = [];
+
+  console.log(coins);
+  coins.forEach((coin) => {
+    coin.draw();
+    coin.checkCollision();
+    coin.move();
+    if (coin.xPos < canvas.width) {
+      coinsStillInScreen.push(coin);
+    }
+  });
+  coins = coinsStillInScreen;
+
+  if (animateId % 600 === 0) {
+    coins.push(new Coin(Math.random() * (canvas.height - 99)));
+  }
+
   drawLarsPirate();
   drawScore();
 
@@ -297,39 +342,6 @@ const animate = () => {
     crabs.push(new Crab(Math.random() * (canvas.height - 99)));
   }
 
-  const stonesStillInScreen = [];
-
-  console.log(stones);
-  stones.forEach((stone) => {
-    stone.draw();
-    stone.move();
-    if (stone.xPos < canvas.width) {
-      stonesStillInScreen.push(stone);
-    }
-  });
-  stones = stonesStillInScreen;
-
-  if (animateId % 20 === 0) {
-    stones.push(new Stone(Math.random() * (canvas.height - 200)));
-  }
-
-  const coinsStillInScreen = [];
-
-  console.log(coins);
-  coins.forEach((coin) => {
-    coin.draw();
-    coin.checkCollision();
-    coin.move();
-    if (coin.xPos < canvas.width) {
-      coinsStillInScreen.push(coin);
-    }
-  });
-  coins = coinsStillInScreen;
-
-  if (animateId % 600 === 0) {
-    coins.push(new Coin(Math.random() * (canvas.height - 99)));
-  }
-
   if (gameOver) {
     cancelAnimationFrame(animateId);
     restartBtn.style.display = "block";
@@ -347,7 +359,7 @@ const animate = () => {
     animateId = requestAnimationFrame(animate);
   }
 
-  if (score >= 76) {
+  if (score === 10) {
     cancelAnimationFrame(animateId);
     restartBtn.style.display = "block";
     gameAudio.pause();
@@ -393,13 +405,15 @@ window.onload = () => {
     larsPirateX = canvas.width - larsPirateWidth - 20;
     isMovingUp = false;
     isMovingDown = false;
+    isMovingLeft = false;
+    isMovingRight = false;
     larsPirateY = canvas.height / 2 - larsPirateHeight / 2;
     gameOver = false;
     animateId;
     score = 0;
     skeletons = [];
     crabs = [];
-    trees = [];
+   /*  stones = []; */
     coins = [];
     gameAudio.currentTime = 0;
     gameAudio.volume = 0.1;
@@ -425,6 +439,12 @@ window.onload = () => {
     if (event.key === "ArrowDown") {
       isMovingDown = true;
     }
+    if (event.key === "ArrowLeft") {
+      isMovingLeft = true;
+    }
+    if (event.key === "ArrowRight") {
+      isMovingRight = true;
+    }
     console.log({ isMovingUp, isMovingDown });
   });
 
@@ -435,6 +455,12 @@ window.onload = () => {
     }
     if (event.key === "ArrowDown") {
       isMovingDown = false;
+    }
+    if (event.key === "ArrowLeft") {
+      isMovingLeft = false;
+    }
+    if (event.key === "ArrowRight") {
+      isMovingRight = false;
     }
     console.log({ isMovingUp, isMovingDown });
   });
